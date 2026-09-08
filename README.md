@@ -11,6 +11,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-0088f8" alt="MIT"></a>
   <a href="https://mcp.wellworn.dev/health"><img src="https://img.shields.io/badge/mcp-mcp.wellworn.dev-0088f8" alt="MCP endpoint"></a>
   <a href="https://wellworn.dev/docs"><img src="https://img.shields.io/badge/docs-wellworn.dev-0a0d12" alt="docs"></a>
+  <a href="https://github.com/WellWorn-dev/wellworn/stargazers"><img src="https://img.shields.io/github/stars/WellWorn-dev/wellworn?style=flat&color=0088f8" alt="stars"></a>
 </p>
 
 Wellworn tells your agent which stack, library, skill, or design system to use, what breaks at the version in your lockfile, and who verified it, in under 800 tokens. It works without an account or key.
@@ -38,17 +39,25 @@ remaining: 59
 
 Every verdict names a reviewer, a date, the version tested, and an expiry. A nightly job re-reads the registries; when a major version moves, the verdict is served with a `[RECHECK]` flag instead of going stale.
 
-## Installation
+## Works with
 
-Remote endpoint: `https://mcp.wellworn.dev/mcp` (Streamable HTTP). No key: 60 calls a day per IP. Free key: 2,000 a month per organization. With a key, send `Authorization: Bearer ww_...`.
+Any client that speaks Streamable HTTP takes the same URL: `https://mcp.wellworn.dev/mcp`. No key: 60 calls a day per IP. Free key: 2,000 a month per organization, sent as `Authorization: Bearer ww_...`. Clients that only speak stdio bridge with `npx mcp-remote https://mcp.wellworn.dev/mcp`.
 
-### Claude Code
+| | Client | Setup | Guide |
+|:--|:--|:--|:--|
+| <img src=".github/assets/clients/claude-code.svg" width="18" alt=""> | Claude Code | `claude mcp add --transport http wellworn https://mcp.wellworn.dev/mcp` | [docs](https://wellworn.dev/docs/claude-code) |
+| <img src=".github/assets/clients/cursor.svg" width="18" alt=""> | Cursor | `.cursor/mcp.json` | [docs](https://wellworn.dev/docs/cursor) |
+| <img src=".github/assets/clients/vscode-copilot.svg" width="18" alt=""> | VS Code (Copilot) | `.vscode/mcp.json` | [docs](https://wellworn.dev/docs/vscode-copilot) |
+| <img src=".github/assets/clients/windsurf.svg" width="18" alt=""> | Windsurf | `~/.codeium/windsurf/mcp_config.json` | [docs](https://wellworn.dev/docs/windsurf) |
+| <img src=".github/assets/clients/codex-cli.svg" width="18" alt=""> | Codex CLI | `codex mcp add wellworn --url https://mcp.wellworn.dev/mcp` | [docs](https://wellworn.dev/docs/codex-cli) |
+| <img src=".github/assets/clients/gemini-cli.svg" width="18" alt=""> | Gemini CLI | `~/.gemini/settings.json` | [docs](https://wellworn.dev/docs/gemini-cli) |
+| <img src=".github/assets/clients/cline.svg" width="18" alt=""> | Cline | `cline_mcp_settings.json` | [docs](https://wellworn.dev/docs/cline) |
+| <img src=".github/assets/clients/zed.svg" width="18" alt=""> | Zed | `settings.json` | [docs](https://wellworn.dev/docs/zed) |
+| <img src=".github/assets/clients/opencode.svg" width="18" alt=""> | opencode | `opencode.json` | [docs](https://wellworn.dev/docs/opencode) |
 
-```
-claude mcp add --transport http wellworn https://mcp.wellworn.dev/mcp
-```
+### Claude Code plugin
 
-Or the plugin, which also adds a skill and a hook that prints known traps whenever a dependency manifest changes:
+The plugin adds the server, a skill that tells Claude when to ask it, and a hook that prints known traps whenever a dependency manifest is about to change. The hook is advisory; it never blocks an edit and never sends file contents.
 
 ```
 claude plugin marketplace add WellWorn-dev/wellworn
@@ -57,29 +66,15 @@ claude plugin install wellworn
 
 ### Cursor
 
-Add to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` (project):
-
-```json
+```json title=".cursor/mcp.json"
 { "mcpServers": { "wellworn": { "url": "https://mcp.wellworn.dev/mcp" } } }
-```
-
-### Codex CLI
-
-```
-codex mcp add wellworn --url https://mcp.wellworn.dev/mcp
 ```
 
 ### Gemini CLI
 
-In `~/.gemini/settings.json`:
-
-```json
+```json title="~/.gemini/settings.json"
 { "mcpServers": { "wellworn": { "httpUrl": "https://mcp.wellworn.dev/mcp" } } }
 ```
-
-### Windsurf, Cline, Zed, VS Code, OpenCode
-
-Any client that speaks Streamable HTTP takes the same URL; per-client pages with the exact config live at https://wellworn.dev/docs. Clients that only support stdio can bridge with `npx mcp-remote https://mcp.wellworn.dev/mcp`.
 
 ## Tools
 

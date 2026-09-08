@@ -1,6 +1,6 @@
 # Wellworn verdicts
 
-The public corpus behind https://wellworn.dev and the Wellworn MCP. One YAML file per verdict, validated against the [spec](https://github.com/WellWorn-dev/spec). Folders are the verdict kinds: `recommend`, `compare`, `alternatives`, `design`, `stack`.
+The public corpus behind https://wellworn.dev and the Wellworn MCP. One YAML file per verdict, validated against [`spec/verdict.schema.json`](../spec/verdict.schema.json). Folders are the verdict kinds: `recommend`, `compare`, `alternatives`, `design`, `stack`.
 
 Files here are mirrored from the review database after a reviewer publishes them. A file in this repository without `verified_at` in its frontmatter is a draft awaiting review and is not served.
 

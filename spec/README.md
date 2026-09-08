@@ -2,7 +2,7 @@
 
 A verdict is the unit of judgment Wellworn serves to agents: one question, one pick, one alternative and the condition under which it wins, what to avoid, the traps at a version, the skill, and provenance.
 
-`verdict.schema.json` is the JSON Schema (draft 2020-12) for the YAML files in the [verdicts](https://github.com/WellWorn-dev/verdicts) repository. Rules the schema cannot express, enforced on publish:
+`verdict.schema.json` is the JSON Schema (draft 2020-12) for the YAML files under [`verdicts/`](../verdicts). Rules the schema cannot express, enforced on publish:
 
 1. Exactly one node has role `pick`.
 2. `verified_by`, `verified_at`, and `version_tested` are set by the reviewer who publishes, not by the author.
