@@ -12,6 +12,21 @@ importers:
         specifier: ^2.9.0
         version: 2.9.0
 
+  packages/cli:
+    devDependencies:
+      '@types/node':
+        specifier: ^24
+        version: 24.13.3
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.28)(tsx@4.23.13)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+      vitest:
+        specifier: ^3
+        version: 3.2.7(@types/node@24.13.3)(tsx@4.23.13)(yaml@2.9.0)
+
   packages/db:
     dependencies:
       drizzle-orm:

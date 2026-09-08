@@ -1,7 +1,6 @@
 {
   "name": "@wellworn/mcp",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/main.ts",
@@ -29,5 +28,33 @@
     "pg": "^8.23.0",
     "semver": "^7.8.5",
     "zod": "^3.25.76"
+  },
+  "description": "The Wellworn MCP server: verdicts, traps, skills, and design answers for coding agents over Streamable HTTP. Self-host it with Postgres and Redis, or use https://mcp.wellworn.dev/mcp.",
+  "license": "MIT",
+  "bin": {
+    "wellworn-mcp": "dist/main.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    ".env.example"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WellWorn-dev/wellworn.git",
+    "directory": "packages/mcp"
+  },
+  "homepage": "https://wellworn.dev/docs/security/self-hosting",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "coding-agents",
+    "dependencies"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }
