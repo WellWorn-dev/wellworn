@@ -10,11 +10,14 @@ export type KeyResolver = (token: string) => Promise<{ orgId: string; keyId: str
 export const ANON_BURST = 10;
 export const ANON_DAILY_CAP = 60;
 
+/** Forwarded headers are caller-supplied, so they only count when a proxy we run sits in front. */
 export function clientIp(req: Request, trustProxy: boolean): string {
-  const cf = req.header("cf-connecting-ip");
-  if (trustProxy && cf) return cf;
-  const xff = req.header("x-forwarded-for");
-  if (xff) return xff.split(",")[0]!.trim();
+  if (trustProxy) {
+    const cf = req.header("cf-connecting-ip");
+    if (cf) return cf.trim();
+    const xff = req.header("x-forwarded-for");
+    if (xff) return xff.split(",")[0]!.trim();
+  }
   return req.socket.remoteAddress ?? "0.0.0.0";
 }
 

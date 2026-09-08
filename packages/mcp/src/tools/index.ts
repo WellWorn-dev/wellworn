@@ -28,13 +28,17 @@ export function registerTools(server: McpServer, ctx: ToolContext) {
     const body = await fn();
     return ok(`${body}\nremaining: ${m.remaining}`);
   };
+  // Driver and database messages carry connection details, so the caller only ever gets the ref.
+  const internalError = (err: unknown): Result => {
+    const id = Math.random().toString(36).slice(2, 10);
+    console.error(JSON.stringify({ level: "error", msg: "tool failed", id, error: String(err) }));
+    return fail(`internal error (ref ${id}); try again in a moment`);
+  };
   const guarded = <T>(handler: (args: T) => Promise<string>) => async (args: T): Promise<Result> => {
     try {
       return await metered(() => handler(args))();
     } catch (err) {
-      const id = Math.random().toString(36).slice(2, 10);
-      console.error(JSON.stringify({ level: "error", msg: "tool failed", id, error: String(err) }));
-      return fail(`internal error (ref ${id}); try again in a moment`);
+      return internalError(err);
     }
   };
 
@@ -75,12 +79,16 @@ export function registerTools(server: McpServer, ctx: ToolContext) {
 
   server.registerTool("submit_trap", {
     description: "Report a breakage you hit and how you fixed it; reviewed before it is served. Needs a free key.",
-    inputSchema: { library: short(80), version: short(40), symptom: short(400), fix: short(1200), evidence_url: z.string().url().max(300).optional() },
+    inputSchema: { library: short(80), version: short(40), symptom: short(400), fix: short(1200), evidence_url: z.string().url().max(300).regex(/^https?:\/\//i, "evidence_url must be http or https").optional() },
   }, async (args) => {
     if (ctx.scope.kind !== "org") return ok("key required: create a free key at https://wellworn.dev/keys to submit traps");
     const m = await ctx.meter();
     if (!m.allowed) return ok(m.line);
-    const id = await submitTrap(ctx.db, ctx.scope.keyId, args);
-    return ok(`submitted ${id}; a reviewer will verify it. Thank you.\nremaining: ${m.remaining}`);
+    try {
+      const id = await submitTrap(ctx.db, ctx.scope.keyId, args);
+      return ok(`submitted ${id}; a reviewer will verify it. Thank you.\nremaining: ${m.remaining}`);
+    } catch (err) {
+      return internalError(err);
+    }
   });
 }

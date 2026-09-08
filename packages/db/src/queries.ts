@@ -11,6 +11,9 @@ export type TrapRow = typeof traps.$inferSelect;
 const servable = inArray(verdicts.status, ["published", "recheck"]);
 
 /** Full-text search over served verdicts of one kind; falls back to tag overlap; newest verification wins ties. */
+/** Escapes the LIKE metacharacters so a search term matches literally. */
+export const escapeLike = (term: string) => term.replace(/[\\%_]/g, "\\$&");
+
 export async function findVerdict(db: Db, q: string, kind: VerdictKind): Promise<VerdictRow | undefined> {
   const words = q.toLowerCase().match(/[a-z0-9.+#-]{2,}/g) ?? [];
   if (words.length === 0) return undefined;
@@ -60,7 +63,7 @@ export async function findNode(db: Db, nameOrSlug: string): Promise<NodeRow | un
   const [row] = await db
     .select()
     .from(nodes)
-    .where(or(eq(nodes.slug, q), eq(nodes.packageName, q), ilike(nodes.name, q)))
+    .where(or(eq(nodes.slug, q), eq(nodes.packageName, q), ilike(nodes.name, escapeLike(q))))
     .limit(1);
   return row;
 }
@@ -121,7 +124,7 @@ export async function listCatalogCategories(db: Db) {
 export async function listCatalog(db: Db, opts: { tag?: string; q?: string; limit?: number; offset?: number } = {}) {
   const conds = [sql`${nodes.attribution} is not null`];
   if (opts.tag) conds.push(arrayOverlaps(nodes.tags, [opts.tag]));
-  if (opts.q) conds.push(or(ilike(nodes.name, `%${opts.q}%`), ilike(nodes.summary, `%${opts.q}%`))!);
+  if (opts.q) { const like = `%${escapeLike(opts.q)}%`; conds.push(or(ilike(nodes.name, like), ilike(nodes.summary, like))!); }
   return db.select().from(nodes).where(and(...conds)).orderBy(desc(sql`coalesce((${nodes.signals}->>'stars')::int, 0)`)).limit(opts.limit ?? 60).offset(opts.offset ?? 0);
 }
 

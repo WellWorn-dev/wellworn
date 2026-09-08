@@ -29,7 +29,9 @@ export async function createApp(opts: AppOptions) {
       await redis.ping();
       res.set("cache-control", "no-store").json({ ok: true, service: "mcp", sha: opts.version ?? "dev" });
     } catch (err) {
-      res.status(503).json({ ok: false, error: String(err) });
+      // The driver puts the connection string in the message, so it goes to the log, not the caller.
+      console.error(JSON.stringify({ level: "error", msg: "health check failed", error: String(err) }));
+      res.status(503).json({ ok: false, service: "mcp" });
     }
   });
 
