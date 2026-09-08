@@ -44,15 +44,15 @@ Any client that speaks Streamable HTTP takes the same URL: `https://mcp.wellworn
 
 | | Client | Setup | Guide |
 |:--|:--|:--|:--|
-| <img src=".github/assets/clients/claude-code.svg" width="18" alt=""> | Claude Code | `claude mcp add --transport http wellworn https://mcp.wellworn.dev/mcp` | [docs](https://wellworn.dev/docs/claude-code) |
-| <img src=".github/assets/clients/cursor.svg" width="18" alt=""> | Cursor | `.cursor/mcp.json` | [docs](https://wellworn.dev/docs/cursor) |
-| <img src=".github/assets/clients/vscode-copilot.svg" width="18" alt=""> | VS Code (Copilot) | `.vscode/mcp.json` | [docs](https://wellworn.dev/docs/vscode-copilot) |
-| <img src=".github/assets/clients/windsurf.svg" width="18" alt=""> | Windsurf | `~/.codeium/windsurf/mcp_config.json` | [docs](https://wellworn.dev/docs/windsurf) |
-| <img src=".github/assets/clients/codex-cli.svg" width="18" alt=""> | Codex CLI | `codex mcp add wellworn --url https://mcp.wellworn.dev/mcp` | [docs](https://wellworn.dev/docs/codex-cli) |
-| <img src=".github/assets/clients/gemini-cli.svg" width="18" alt=""> | Gemini CLI | `~/.gemini/settings.json` | [docs](https://wellworn.dev/docs/gemini-cli) |
-| <img src=".github/assets/clients/cline.svg" width="18" alt=""> | Cline | `cline_mcp_settings.json` | [docs](https://wellworn.dev/docs/cline) |
-| <img src=".github/assets/clients/zed.svg" width="18" alt=""> | Zed | `settings.json` | [docs](https://wellworn.dev/docs/zed) |
-| <img src=".github/assets/clients/opencode.svg" width="18" alt=""> | opencode | `opencode.json` | [docs](https://wellworn.dev/docs/opencode) |
+| <img src=".github/assets/clients/claude-code.svg" width="18" alt=""> | Claude Code | `claude mcp add --transport http wellworn https://mcp.wellworn.dev/mcp` | [docs](https://wellworn.dev/docs/clients/claude-code) |
+| <img src=".github/assets/clients/cursor.svg" width="18" alt=""> | Cursor | `.cursor/mcp.json` | [docs](https://wellworn.dev/docs/clients/cursor) |
+| <img src=".github/assets/clients/vscode-copilot.svg" width="18" alt=""> | VS Code (Copilot) | `.vscode/mcp.json` | [docs](https://wellworn.dev/docs/clients/vscode-copilot) |
+| <img src=".github/assets/clients/windsurf.svg" width="18" alt=""> | Windsurf | `~/.codeium/windsurf/mcp_config.json` | [docs](https://wellworn.dev/docs/clients/windsurf) |
+| <img src=".github/assets/clients/codex-cli.svg" width="18" alt=""> | Codex CLI | `codex mcp add wellworn --url https://mcp.wellworn.dev/mcp` | [docs](https://wellworn.dev/docs/clients/codex-cli) |
+| <img src=".github/assets/clients/gemini-cli.svg" width="18" alt=""> | Gemini CLI | `~/.gemini/settings.json` | [docs](https://wellworn.dev/docs/clients/gemini-cli) |
+| <img src=".github/assets/clients/cline.svg" width="18" alt=""> | Cline | `cline_mcp_settings.json` | [docs](https://wellworn.dev/docs/clients/cline) |
+| <img src=".github/assets/clients/zed.svg" width="18" alt=""> | Zed | `settings.json` | [docs](https://wellworn.dev/docs/clients/zed) |
+| <img src=".github/assets/clients/opencode.svg" width="18" alt=""> | opencode | `opencode.json` | [docs](https://wellworn.dev/docs/clients/opencode) |
 
 ### Claude Code plugin
 
