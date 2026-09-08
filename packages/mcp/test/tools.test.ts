@@ -47,7 +47,8 @@ beforeAll(async () => {
   await redis.flushdb();
   await redis.quit();
 
-  const app = await createApp({ databaseUrl: dbUrl, redisUrl, trustProxy: false });
+  // Behind a proxy, so the burst test can put its own calls on an address of its own.
+  const app = await createApp({ databaseUrl: dbUrl, redisUrl, trustProxy: true });
   const started = await app.listen(0);
   baseUrl = started.url;
   stop = started.stop;
