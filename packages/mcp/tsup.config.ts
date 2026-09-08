@@ -10,4 +10,5 @@ export default defineConfig({
   sourcemap: true,
   splitting: false,
   noExternal: [/^@wellworn\//],
+  banner: { js: "#!/usr/bin/env node" },
 });

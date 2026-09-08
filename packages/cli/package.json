@@ -1,0 +1,25 @@
+{
+  "name": "wellworn",
+  "version": "0.1.0",
+  "description": "Wellworn from the command line: known traps for a dependency, a check for a whole manifest, and a stdio bridge to the Wellworn MCP.",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "wellworn": "dist/cli.js" },
+  "files": ["dist", "README.md"],
+  "engines": { "node": ">=20" },
+  "repository": { "type": "git", "url": "git+https://github.com/WellWorn-dev/wellworn.git", "directory": "packages/cli" },
+  "homepage": "https://wellworn.dev/docs",
+  "keywords": ["mcp", "coding-agents", "dependencies", "claude-code", "cursor"],
+  "publishConfig": { "access": "public" },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "tsup": "^8.5.1",
+    "typescript": "^5",
+    "vitest": "^3"
+  }
+}
