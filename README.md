@@ -1,4 +1,17 @@
-# Wellworn: the judgment layer for coding agents
+<p align="center">
+  <a href="https://wellworn.dev"><img src="https://cdn.wellworn.dev/brand/mark-1024-transparent.png" width="72" alt="Wellworn"></a>
+</p>
+
+<h1 align="center">Wellworn</h1>
+
+<p align="center">The judgment layer for coding agents: verified picks, traps at your version, skills, and design systems, over MCP.</p>
+
+<p align="center">
+  <a href="https://github.com/WellWorn-dev/wellworn/actions/workflows/ci.yml"><img src="https://github.com/WellWorn-dev/wellworn/actions/workflows/ci.yml/badge.svg" alt="ci"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-0088f8" alt="MIT"></a>
+  <a href="https://mcp.wellworn.dev/health"><img src="https://img.shields.io/badge/mcp-mcp.wellworn.dev-0088f8" alt="MCP endpoint"></a>
+  <a href="https://wellworn.dev/docs"><img src="https://img.shields.io/badge/docs-wellworn.dev-0a0d12" alt="docs"></a>
+</p>
 
 Wellworn tells your agent which stack, library, skill, or design system to use, what breaks at the version in your lockfile, and who verified it, in under 800 tokens. It works without an account or key.
 
@@ -110,7 +123,7 @@ Tests: `pnpm test` (Postgres and Redis required).
 
 ## Contributing
 
-See `CONTRIBUTING.md`. Traps are fastest through `submit_trap`; verdicts and corrections arrive as pull requests against `verdicts/` and go through a human reviewer.
+Contributions are welcome: verdicts, traps, skills, client setup pages, and server fixes. Start with an issue template (verdict, trap, bug) or a pull request; see `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`. Traps are fastest through `submit_trap`; verdicts and corrections arrive as pull requests against `verdicts/` and go through a human reviewer.
 
 ## License
 
