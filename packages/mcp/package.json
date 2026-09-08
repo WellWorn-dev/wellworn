@@ -27,7 +27,7 @@
     "ioredis": "^5",
     "pg": "^8.23.0",
     "semver": "^7.8.5",
-    "zod": "^3.25.76"
+    "zod": "^4.5.4"
   },
   "description": "The Wellworn MCP server: verdicts, traps, skills, and design answers for coding agents over Streamable HTTP. Self-host it with Postgres and Redis, or use https://mcp.wellworn.dev/mcp.",
   "license": "MIT",
