@@ -17,7 +17,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
-    "@types/node": "^24",
+    "@types/node": "^26",
     "tsup": "^8.5.1",
     "typescript": "^5",
     "vitest": "^3"
