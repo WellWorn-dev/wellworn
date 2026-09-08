@@ -1,0 +1,17 @@
+{
+  "name": "@wellworn/verdict",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "vitest": "^3",
+    "@types/node": "^24"
+  }
+}

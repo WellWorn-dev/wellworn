@@ -1,0 +1,10 @@
+{
+  "name": "wellworn",
+  "description": "Ask Wellworn before adding a dependency or starting a screen: verified picks, traps at your version, and the skill to do it right.",
+  "version": "0.1.0",
+  "author": { "name": "Wellworn", "url": "https://wellworn.dev" },
+  "homepage": "https://wellworn.dev/docs/claude-code",
+  "repository": "https://github.com/WellWorn-dev/plugin",
+  "license": "MIT",
+  "keywords": ["mcp", "dependencies", "stack", "design-system", "traps"]
+}

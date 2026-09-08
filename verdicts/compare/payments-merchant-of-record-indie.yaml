@@ -1,0 +1,59 @@
+slug: payments-merchant-of-record-indie
+kind: compare
+question: Paddle vs Polar vs Lemon Squeezy as merchant of record for an indie SaaS selling worldwide
+context_tags: [payments, merchant-of-record, saas, paddle, polar, lemon-squeezy, tax, payouts]
+version_tested: "Paddle Billing API 2026-09"
+answer_md: >-
+  Paddle Billing if you need payouts outside the Stripe Connect countries (Paddle pays by wire or Payoneer) or the
+  widest tax coverage; the 5% + $0.50 fee is all-in with no international surcharge. Usage pricing is done as flat
+  tiers plus one-time credit products and reported through the subscription charge endpoint.
+alt_md: >-
+  Polar is open source, has native usage-based billing and entitlements, and starts at 4%, but pays out only through
+  Stripe Connect Express, so founders outside Stripe's supported countries cannot receive money.
+alt_wins_when: you are in a Stripe Connect country, want usage metering built in, and prefer an open-source vendor
+avoid_md: >-
+  Lemon Squeezy (Stripe-owned since 2024) still has no Payoneer payout and its international subscription rate lands
+  around 7% + $0.50 once surcharges apply; fine for one-time digital products, weaker for global SaaS.
+nodes:
+  - role: pick
+    slug: paddle
+    name: Paddle Billing
+    type: saas
+    docs_url: https://developer.paddle.com
+    llms_txt_url: https://developer.paddle.com/llms.txt
+    summary: Merchant of record with subscriptions, one-time charges, and tax in the most jurisdictions.
+  - role: alternative
+    slug: polar
+    name: Polar
+    type: saas
+    docs_url: https://polar.sh/docs
+    license: Apache-2.0
+    summary: Open-source merchant of record with native usage-based billing; payouts via Stripe Connect.
+  - role: avoid
+    slug: lemon-squeezy
+    name: Lemon Squeezy
+    type: saas
+    docs_url: https://docs.lemonsqueezy.com
+    summary: Merchant of record for digital products, owned by Stripe.
+traps:
+  - node: paddle
+    version_range: "*"
+    severity: major
+    symptom: Deleting a Paddle discount archives it; recreating one with the same code returns 409.
+    fix_md: Never delete discounts you may need again; set status to archived deliberately and create new codes with new names, or reactivate the archived one.
+  - node: paddle
+    version_range: "*"
+    severity: blocker
+    symptom: Selling AI-generated content or image generation through Paddle triggers an acceptable-use review and held payouts.
+    fix_md: Keep AI generation products off the Paddle rail (sell them through another processor) and disclose every product line during verification; second seller accounts must be disclosed too.
+sources:
+  - url: https://developer.paddle.com/get-started/how-paddle-works/ai-companies
+    fetched_at: "2026-09-08"
+    note: "Paddle's own guidance: flat tiers + prepaid credits via one-time products, overages via subscription charge"
+  - url: https://polar.sh/docs/merchant-of-record/supported-countries
+    fetched_at: "2026-09-08"
+  - url: https://www.buildmvpfast.com/blog/lemon-squeezy-vs-polar-paddle-merchant-of-record-2026
+    fetched_at: "2026-09-08"
+  - url: https://lemonsqueezy.nolt.io/5
+    fetched_at: "2026-09-08"
+    note: "open request for Payoneer payouts"

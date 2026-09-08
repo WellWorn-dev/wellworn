@@ -1,0 +1,17 @@
+{
+  "name": "wellworn",
+  "private": true,
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "build": "pnpm -r --if-present build",
+    "validate:verdicts": "node spec/validate.mjs verdicts"
+  },
+  "devDependencies": {
+    "yaml": "^2.9.0"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wellworn.dev/spec/verdict.schema.json",
+  "title": "Wellworn verdict",
+  "type": "object",
+  "required": ["slug", "kind", "question", "answer_md", "nodes", "sources"],
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "kind": { "enum": ["recommend", "compare", "alternatives", "design", "stack"] },
+    "question": { "type": "string", "minLength": 8, "maxLength": 300 },
+    "context_tags": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9.+-]+$" }, "maxItems": 12 },
+    "version_tested": { "type": "string", "maxLength": 60 },
+    "answer_md": { "type": "string", "minLength": 20, "maxLength": 1200 },
+    "alt_md": { "type": "string", "maxLength": 600 },
+    "alt_wins_when": { "type": "string", "maxLength": 300 },
+    "avoid_md": { "type": "string", "maxLength": 600 },
+    "nodes": {
+      "type": "array", "minItems": 1, "maxItems": 12,
+      "items": {
+        "type": "object", "required": ["role", "slug", "name", "type"],
+        "properties": {
+          "role": { "enum": ["pick", "alternative", "avoid", "component"] },
+          "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "name": { "type": "string" },
+          "type": { "enum": ["library", "framework", "tool", "saas", "skill", "mcp_server", "design_system", "stack"] },
+          "registry": { "enum": ["npm", "pypi", "packagist", "crates", "go", "none"] },
+          "package_name": { "type": "string" },
+          "latest_version": { "type": "string" },
+          "docs_url": { "type": "string", "format": "uri" },
+          "llms_txt_url": { "type": "string", "format": "uri" },
+          "license": { "type": "string" },
+          "summary": { "type": "string", "maxLength": 200 },
+          "status": { "enum": ["active", "deprecated", "archived"] }
+        }
+      }
+    },
+    "traps": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["node", "version_range", "severity", "symptom", "fix_md"],
+        "properties": {
+          "node": { "type": "string" },
+          "version_range": { "type": "string", "description": "semver range, or * for all versions" },
+          "severity": { "enum": ["blocker", "major", "minor"] },
+          "symptom": { "type": "string", "maxLength": 300 },
+          "fix_md": { "type": "string", "maxLength": 1200 },
+          "evidence_url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "sources": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["url", "fetched_at"], "properties": { "url": { "type": "string", "format": "uri" }, "fetched_at": { "type": "string", "format": "date" }, "note": { "type": "string" } } }
+    }
+  }
+}
