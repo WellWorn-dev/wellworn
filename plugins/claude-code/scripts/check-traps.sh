@@ -18,7 +18,11 @@ else
     */package.json|*/pyproject.toml|*/requirements.txt|*/composer.json|*/Cargo.toml|*/go.mod|*/Gemfile) ;;
     *) exit 0 ;;
   esac
-  libs=$(printf '%s' "$input" | grep -oE '"(new_string|content)"[[:space:]]*:[[:space:]]*"[^"]{0,4000}' | grep -oE '"[a-z@][a-z0-9@/._-]{1,60}"[[:space:]]*:[[:space:]]*"[~^]?[0-9]' | grep -oE '^"[^"]+"' | tr -d '"' | sort -u | head -8)
+  # The manifest text arrives as an escaped JSON string, so a JSON parser reads it, not a quote-bounded grep.
+  libs=$(printf '%s' "$input" | python3 -c 'import json,re,sys
+t=json.load(sys.stdin).get("tool_input") or {}
+s=t.get("new_string") or t.get("content") or ""
+print("\n".join(sorted(set(re.findall(r"\"([a-z@][a-z0-9@/._-]{1,60})\"\s*:\s*\"[~^]?[0-9]", s)))[:8]))' 2>/dev/null)
 fi
 [ -n "$libs" ] || exit 0
 out=""
