@@ -1,0 +1,53 @@
+slug: docs-for-coding-agents
+kind: alternatives
+question: up-to-date library documentation for a coding agent (Context7 alternatives)
+context_tags: [mcp, docs, agents, context7, retrieval]
+version_tested: "2026-09"
+answer_md: >-
+  For plain API reference, Context7 still has the widest index (9,000+ libraries) but scores 16.8% overall on the
+  DevDex benchmark (46.6% docs, 0.8% repos, 2.9% issue-to-fix) and cut its free tier to 1,000 calls a month in
+  January 2026. Firecrawl's developer index (63.1%) and Mintlify's search index (54.6%) cover issues and repos too.
+  Docfork shut down on 2026-06-14; remove it from any config.
+nodes:
+  - role: pick
+    slug: firecrawl-developer-index
+    name: Firecrawl Developer Index
+    type: saas
+    docs_url: https://docs.firecrawl.dev
+    summary: Search over docs, READMEs, issues, and PRs for agents; 63.1% on DevDex.
+  - role: component
+    slug: mintlify-search-index
+    name: Mintlify Search Index
+    type: saas
+    docs_url: https://mintlify.com/docs
+    summary: Publisher-direct docs index across 200,000+ libraries; 54.6% on DevDex.
+  - role: component
+    slug: context7
+    name: Context7
+    type: saas
+    docs_url: https://context7.com
+    license: MIT (server only)
+    summary: Version-pinned doc snippets over MCP; index and crawler are closed; 1,000 free calls a month with a key.
+  - role: avoid
+    slug: docfork
+    name: Docfork
+    type: saas
+    status: archived
+    summary: Docs MCP that shut down on 2026-06-14; endpoints are offline and keys no longer work.
+traps:
+  - node: context7
+    version_range: "*"
+    severity: major
+    symptom: One get-library-docs call injects 10k to 20k tokens and pushes project context out of the window.
+    fix_md: Ask for a narrow topic and a small token budget per call, and never call it more than once per file you are editing.
+sources:
+  - url: https://www.firecrawl.dev/blog/best-context7-alternatives
+    fetched_at: "2026-09-08"
+    note: "DevDex benchmark numbers"
+  - url: https://mcp.directory/blog/context7-vs-deepwiki-vs-ref-vs-docfork-2026
+    fetched_at: "2026-09-08"
+  - url: https://github.com/docfork/docfork
+    fetched_at: "2026-09-08"
+    note: "archived; README says shut down 2026-06-14"
+  - url: https://blog.devgenius.io/context7-quietly-slashed-its-free-tier-by-92-16fa05ddce03
+    fetched_at: "2026-09-08"

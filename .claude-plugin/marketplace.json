@@ -1,0 +1,7 @@
+{
+  "name": "wellworn",
+  "owner": { "name": "Wellworn", "url": "https://wellworn.dev" },
+  "plugins": [
+    { "name": "wellworn", "source": "./plugins/claude-code", "description": "Verified picks, traps, and skills for coding agents." }
+  ]
+}

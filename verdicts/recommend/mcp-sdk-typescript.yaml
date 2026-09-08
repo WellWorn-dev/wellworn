@@ -1,0 +1,38 @@
+slug: mcp-sdk-typescript
+kind: recommend
+question: which MCP server SDK and transport for a remote MCP server in TypeScript
+context_tags: [mcp, typescript, agents, sdk]
+version_tested: "1.30.0"
+answer_md: >-
+  @modelcontextprotocol/sdk 1.x with Streamable HTTP in stateless mode (`sessionIdGenerator: undefined`), one
+  McpServer per request. It is the line every client is tested against; v2.0.0 shipped in September 2026 and splits
+  into @modelcontextprotocol/server, /node, /express with different imports, so wait for 2.1 before moving.
+avoid_md: The HTTP+SSE transport is deprecated with a twelve-month window in the 2026-07-28 spec; do not start new servers on it.
+nodes:
+  - role: pick
+    slug: modelcontextprotocol-sdk
+    name: MCP TypeScript SDK
+    type: library
+    registry: npm
+    package_name: "@modelcontextprotocol/sdk"
+    latest_version: "1.30.0"
+    docs_url: https://github.com/modelcontextprotocol/typescript-sdk/blob/v1.x/README.md
+    license: MIT
+    summary: Official MCP server and client SDK; 1.x is the mature line.
+traps:
+  - node: modelcontextprotocol-sdk
+    version_range: ">=1.25.0 <2.0.0"
+    severity: major
+    symptom: registerTool inputSchema written as z.object(...) is accepted by TypeScript but tools/list shows an empty schema.
+    fix_md: "In 1.x pass the raw zod shape `{ a: z.string() }` as `inputSchema`, not `z.object({...})`; the object form is the v2 API."
+  - node: modelcontextprotocol-sdk
+    version_range: ">=1.25.0 <2.0.0"
+    severity: minor
+    symptom: The SDK imports zod/v4 internally; a project on zod 3.24 or older fails at import.
+    fix_md: Install zod ^3.25 (which ships zod/v3 and zod/v4 entry points) or zod ^4.
+sources:
+  - url: https://www.npmjs.com/package/@modelcontextprotocol/sdk
+    fetched_at: "2026-09-08"
+    note: "1.30.0 latest; @modelcontextprotocol/server 2.0.0 published the same week"
+  - url: https://github.com/modelcontextprotocol/typescript-sdk/blob/v1.29.0/README.md
+    fetched_at: "2026-09-08"

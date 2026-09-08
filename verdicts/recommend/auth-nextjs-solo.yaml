@@ -1,0 +1,63 @@
+slug: auth-nextjs-solo
+kind: recommend
+question: auth for a Next.js app, solo dev, free tier, email + Google login
+context_tags: [nextjs, auth, solo, free-tier, typescript]
+version_tested: "1.7.3"
+answer_md: >-
+  Better Auth. You own the users table in your own Postgres, the organization and api-key plugins cover teams and
+  keys without a second vendor, and there is no per-monthly-active-user bill when you grow.
+alt_md: Clerk gives you hosted sign-in UI, SSO, and an admin panel in an afternoon.
+alt_wins_when: you need SSO or hosted UI this week and accept per-MAU pricing and a vendor-owned user store
+avoid_md: >-
+  NextAuth / Auth.js v4: the v5 migration has stalled since 2025, the session callback silently drops custom
+  fields unless typed twice, and the docs describe two incompatible APIs at once.
+nodes:
+  - role: pick
+    slug: better-auth
+    name: Better Auth
+    type: library
+    registry: npm
+    package_name: better-auth
+    latest_version: "1.7.3"
+    docs_url: https://www.better-auth.com/docs
+    llms_txt_url: https://www.better-auth.com/llms.txt
+    license: MIT
+    summary: Framework-agnostic TypeScript auth with plugins for organizations, API keys, admin roles, passkeys.
+  - role: alternative
+    slug: clerk
+    name: Clerk
+    type: saas
+    docs_url: https://clerk.com/docs
+    summary: Hosted authentication and user management with prebuilt UI components.
+  - role: avoid
+    slug: next-auth
+    name: NextAuth (Auth.js)
+    type: library
+    registry: npm
+    package_name: next-auth
+    docs_url: https://authjs.dev
+    license: ISC
+    summary: Auth library for Next.js; v4 stable, v5 in prolonged beta.
+traps:
+  - node: better-auth
+    version_range: ">=1.0.0"
+    severity: major
+    symptom: Role or plan changes do not reach the session until the cookie cache expires (default 5 minutes).
+    fix_md: >-
+      Disable `session.cookieCache` for role-gated apps, or call `auth.api.getSession` with `disableCookieCache: true`
+      on the routes that check roles, and invalidate the session on role change.
+  - node: better-auth
+    version_range: ">=1.0.0"
+    severity: minor
+    symptom: Drizzle adapter cannot find plugin tables (organization, apikey) and fails at runtime, not at build.
+    fix_md: >-
+      Pass the full `schema` object to `drizzleAdapter(db, { provider: "pg", schema })` and re-run
+      `npx @better-auth/cli generate` after adding any plugin, then migrate.
+sources:
+  - url: https://www.better-auth.com/docs/plugins/api-key
+    fetched_at: "2026-09-08"
+  - url: https://www.better-auth.com/docs/plugins/organization
+    fetched_at: "2026-09-08"
+  - url: https://www.npmjs.com/package/better-auth
+    fetched_at: "2026-09-08"
+    note: "1.7.3 latest on 2026-09-08"

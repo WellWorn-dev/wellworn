@@ -1,0 +1,50 @@
+slug: orm-postgres-typescript
+kind: compare
+question: Drizzle vs Prisma for a TypeScript app on Postgres
+context_tags: [orm, postgres, typescript, drizzle, prisma, serverless]
+version_tested: "0.45.2"
+answer_md: >-
+  Drizzle. The schema is TypeScript you can read, queries look like the SQL they become, the runtime adds about
+  20 KB with no engine to warm up, and migrations are plain SQL files you can review in a PR.
+alt_md: Prisma has the more mature studio, a larger tutorial base, and generated types that beginners find easier.
+alt_wins_when: your team is new to SQL and wants Prisma Studio and the generated client more than control over queries
+nodes:
+  - role: pick
+    slug: drizzle-orm
+    name: Drizzle ORM
+    type: library
+    registry: npm
+    package_name: drizzle-orm
+    latest_version: "0.45.2"
+    docs_url: https://orm.drizzle.team/docs/overview
+    llms_txt_url: https://orm.drizzle.team/llms.txt
+    license: Apache-2.0
+    summary: TypeScript ORM with SQL-shaped queries, schema in code, SQL migrations.
+  - role: alternative
+    slug: prisma
+    name: Prisma
+    type: library
+    registry: npm
+    package_name: prisma
+    docs_url: https://www.prisma.io/docs
+    license: Apache-2.0
+    summary: Schema-first ORM with a generated client and Prisma Studio.
+traps:
+  - node: drizzle-orm
+    version_range: ">=0.30.0"
+    severity: major
+    symptom: Two app replicas start at once and both run migrations; the second fails on an already-applied step.
+    fix_md: >-
+      Run `migrate()` behind `pg_advisory_lock(<constant>)` in one process (a jobs container or a release step),
+      never in every web replica's startup.
+  - node: drizzle-orm
+    version_range: ">=0.30.0"
+    severity: minor
+    symptom: Selecting into a destructured tuple with `noUncheckedIndexedAccess` produces a type error on the first row.
+    fix_md: Read `rows[0]?.field ?? fallback` instead of destructuring `const [{ field }] = rows`.
+sources:
+  - url: https://orm.drizzle.team/docs/migrations
+    fetched_at: "2026-09-08"
+  - url: https://www.npmjs.com/package/drizzle-orm
+    fetched_at: "2026-09-08"
+    note: "0.45.2 latest on 2026-09-08"

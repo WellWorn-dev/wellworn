@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "wellworn": { "type": "http", "url": "https://mcp.wellworn.dev/mcp" }
+  }
+}
