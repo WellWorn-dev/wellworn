@@ -1,15 +1,25 @@
 #!/usr/bin/env bash
-# Advisory only: when a dependency manifest is about to change, print the known traps for the
-# libraries named in it. Never blocks the edit (always exits 0), never sends file contents.
+# Advisory only: before a package install command runs, or a dependency manifest is edited, print the
+# known traps for the libraries involved. Never blocks (always exits 0), never sends file contents.
 set -u
 input=$(cat)
-path=$(printf '%s' "$input" | sed -n 's/.*"file_path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)
-case "$path" in
-  */package.json|*/pyproject.toml|*/requirements.txt|*/composer.json|*/Cargo.toml|*/go.mod|*/Gemfile) ;;
-  *) exit 0 ;;
-esac
 command -v curl >/dev/null || exit 0
-libs=$(printf '%s' "$input" | grep -oE '"(new_string|content)"[[:space:]]*:[[:space:]]*"[^"]{0,4000}' | grep -oE '"[a-z@][a-z0-9@/._-]{1,60}"[[:space:]]*:[[:space:]]*"[~^]?[0-9]' | grep -oE '^"[^"]+"' | tr -d '"' | sort -u | head -8)
+libs=""
+cmd=$(printf '%s' "$input" | sed -n 's/.*"command"[[:space:]]*:[[:space:]]*"\(.*\)".*/\1/p' | head -1)
+if [ -n "$cmd" ]; then
+  case "$cmd" in
+    *"npm install"*|*"npm i "*|*"pnpm add"*|*"yarn add"*|*"bun add"*|*"pip install"*|*"uv add"*|*"composer require"*|*"cargo add"*) ;;
+    *) exit 0 ;;
+  esac
+  libs=$(printf '%s' "$cmd" | sed 's/\\"/"/g' | tr ' ' '\n' | grep -E '^[@a-z][a-z0-9@/._-]{1,60}(@[~^]?[0-9][^ ]*)?$' | grep -vE '^(npm|pnpm|yarn|bun|pip|uv|composer|cargo|install|add|require|i|-D|--save-dev|--dev)$' | sed 's/@[~^]*[0-9].*$//' | sort -u | head -8)
+else
+  path=$(printf '%s' "$input" | sed -n 's/.*"file_path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)
+  case "$path" in
+    */package.json|*/pyproject.toml|*/requirements.txt|*/composer.json|*/Cargo.toml|*/go.mod|*/Gemfile) ;;
+    *) exit 0 ;;
+  esac
+  libs=$(printf '%s' "$input" | grep -oE '"(new_string|content)"[[:space:]]*:[[:space:]]*"[^"]{0,4000}' | grep -oE '"[a-z@][a-z0-9@/._-]{1,60}"[[:space:]]*:[[:space:]]*"[~^]?[0-9]' | grep -oE '^"[^"]+"' | tr -d '"' | sort -u | head -8)
+fi
 [ -n "$libs" ] || exit 0
 out=""
 for lib in $libs; do
@@ -18,6 +28,6 @@ for lib in $libs; do
 "
 done
 [ -n "$out" ] || exit 0
-esc=$(printf '%s' "$out" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))' 2>/dev/null || printf '"%s"' "$(printf '%s' "$out" | tr '\n' ' ' | sed 's/"/\\"/g')")
+esc=$(printf '%s' "$out" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))' 2>/dev/null) || exit 0
 printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","additionalContext":%s}}\n' "$esc"
 exit 0

@@ -5,7 +5,7 @@ Adds the Wellworn MCP server, a skill that tells Claude when to ask it, and a ho
 ## Install
 
 ```
-claude plugin marketplace add WellWorn-dev/plugin
+claude plugin marketplace add WellWorn-dev/wellworn
 claude plugin install wellworn
 ```
 
@@ -15,7 +15,7 @@ No account or key is needed. Sixty calls a day per IP; a free key raises that to
 
 - `.mcp.json`: the remote MCP endpoint `https://mcp.wellworn.dev/mcp`
 - `skills/wellworn`: when and how Claude uses the tools
-- `hooks/hooks.json` + `scripts/check-traps.sh`: PreToolUse hook on `package.json`, `pyproject.toml`, `composer.json`, `Cargo.toml`, `go.mod`, `Gemfile`, `requirements.txt`
+- `hooks/hooks.json` + `scripts/check-traps.sh`: PreToolUse hook on package install commands (npm, pnpm, yarn, bun, pip, uv, composer, cargo) and on edits to `package.json`, `pyproject.toml`, `composer.json`, `Cargo.toml`, `go.mod`, `Gemfile`, `requirements.txt`
 
 ## Other agents
 
