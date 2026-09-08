@@ -11,7 +11,6 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-0088f8" alt="MIT"></a>
   <a href="https://mcp.wellworn.dev/health"><img src="https://img.shields.io/badge/mcp-mcp.wellworn.dev-0088f8" alt="MCP endpoint"></a>
   <a href="https://wellworn.dev/docs"><img src="https://img.shields.io/badge/docs-wellworn.dev-0a0d12" alt="docs"></a>
-  <a href="https://github.com/WellWorn-dev/wellworn/stargazers"><img src="https://img.shields.io/github/stars/WellWorn-dev/wellworn?style=flat&color=0088f8" alt="stars"></a>
 </p>
 
 Wellworn tells your agent which stack, library, skill, or design system to use, what breaks at the version in your lockfile, and who verified it, in under 800 tokens. It works without an account or key.
