@@ -17,7 +17,7 @@
     "@types/semver": "^7.8.0",
     "drizzle-kit": "^0.31.10",
     "typescript": "^5",
-    "vitest": "^3"
+    "vitest": "^5"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
