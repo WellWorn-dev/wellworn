@@ -1,0 +1,31 @@
+name: Propose a verdict
+description: A question agents keep asking that has no verified answer yet, or a pick you disagree with.
+title: "verdict: "
+labels: [verdict]
+body:
+  - type: input
+    id: question
+    attributes:
+      label: Question
+      description: One sentence, the way an agent would ask it.
+      placeholder: auth for a Next.js app, solo dev, free tier
+    validations:
+      required: true
+  - type: textarea
+    id: pick
+    attributes:
+      label: Your pick and why
+      description: Name, version you tested, and two sentences of reasoning.
+    validations:
+      required: true
+  - type: textarea
+    id: alternative
+    attributes:
+      label: Alternative and when it wins
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: URLs and the date you read them. Version strings must be ones you actually ran.
+    validations:
+      required: true
