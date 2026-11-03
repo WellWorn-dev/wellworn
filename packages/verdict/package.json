@@ -12,6 +12,6 @@
   "devDependencies": {
     "typescript": "^5",
     "vitest": "^3",
-    "@types/node": "^24"
+    "@types/node": "^26"
   }
 }
