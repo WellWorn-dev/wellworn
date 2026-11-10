@@ -18,15 +18,15 @@
     "vitest": "^3"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@wellworn/db": "workspace:*",
     "@wellworn/ratelimit": "workspace:*",
     "@wellworn/verdict": "workspace:*",
-    "drizzle-orm": "^0.45.2",
-    "express": "^5.2.1",
+    "drizzle-orm": "^0.45.4",
+    "express": "^5.3.0",
     "ioredis": "^5",
-    "pg": "^8.23.0",
-    "semver": "^7.8.5",
+    "pg": "^8.23.1",
+    "semver": "^7.8.6",
     "zod": "^3.25.76"
   },
   "description": "The Wellworn MCP server: verdicts, traps, skills, and design answers for coding agents over Streamable HTTP. Self-host it with Postgres and Redis, or use https://mcp.wellworn.dev/mcp.",
